@@ -1,0 +1,30 @@
+# Credentials and API keys - NEVER commit these
+firebase_api_key.json
+*.json.key
+service-account*.json
+api.txt
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
