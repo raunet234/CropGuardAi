@@ -3,11 +3,27 @@ firebase_api_key.json
 *.json.key
 service-account*.json
 api.txt
+api_keys
+agrismart-c4c7e-firebase-adminsdk-fbsvc-68f86cb906.json
+
+# ML model files - large and contain sensitive trained weights
+model_v2.h5
+*.h5
+model_api.py
+agrismart/model_v2.h5
 
 # Environment files
 .env
 .env.local
 .env.*.local
+agrismart/backend/.env
+agrismart/frontend/.env
+
+# Sensitive docs
+prompt.md
+
+# Backend folder
+backend/
 
 # Dependencies
 node_modules/

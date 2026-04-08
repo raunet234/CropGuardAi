@@ -1,6 +1,19 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(node -e ':*)",
+      "Bash(timeout 8 node server.js)",
+      "Bash(npm run:*)",
+      "Bash(firebase --version)",
+      "Bash(npm install:*)",
+      "Bash(npm list:*)",
+      "Bash(npm config:*)",
+      "Bash(npx firebase-tools:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "code-review-graph"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

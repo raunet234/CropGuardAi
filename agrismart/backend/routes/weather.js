@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
       description: data.weather[0].description,
       icon: data.weather[0].icon,
       main: data.weather[0].main,
-      rain: data.rain ? data.rain['1h'] || 0 : 0,
+      rain: data.rain ? (data.rain['1h'] ?? data.rain['3h'] ?? 0) : 0,
       visibility: data.visibility,
     });
   } catch (err) {

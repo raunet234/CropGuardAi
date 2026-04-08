@@ -56,16 +56,7 @@ export default function DiseaseDetectionPage() {
           <h1 className="text-2xl font-bold text-gray-800">🔬 Plant Disease Detection</h1>
           <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full">AI Vision Analysis</span>
         </div>
-        <p className="text-gray-500 text-sm">Upload a plant leaf photo — our AI analyses it to identify disease symptoms, lesion patterns, and severity.</p>
-      </div>
-
-      {/* Stub warning */}
-      <div className="bg-yellow-50 border border-yellow-300 rounded-xl px-4 py-3 mb-5 flex items-start gap-2">
-        <span className="text-yellow-600 text-lg">⚠️</span>
-        <div>
-          <p className="text-yellow-800 font-semibold text-sm">AI model integration pending</p>
-          <p className="text-yellow-700 text-xs mt-0.5">Connect your MobileNetV3 model in <code className="bg-yellow-100 px-1 rounded">backend/services/diseaseDetectionService.js</code></p>
-        </div>
+        <p className="text-gray-500 text-sm">Upload a plant leaf photo — our <strong>MobileNetV2 model</strong> analyses it to identify disease symptoms, lesion patterns, and severity with precision.</p>
       </div>
 
       <div className="flex gap-6">
@@ -74,7 +65,23 @@ export default function DiseaseDetectionPage() {
           <div className="bg-white rounded-2xl shadow-sm p-5 mb-4">
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-semibold text-gray-800 text-sm">📤 Upload Plant Image</h2>
-              <span className="bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded-full border border-blue-200">AI Vision Analysis</span>
+              <div className="flex items-center gap-2">
+                {(preview || result) && (
+                  <button
+                    onClick={() => {
+                      setImage(null)
+                      setPreview(null)
+                      setResult(null)
+                      setError('')
+                      if (fileRef.current) fileRef.current.value = ''
+                    }}
+                    className="text-xs px-3 py-1 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    ✕ Clear
+                  </button>
+                )}
+                <span className="bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded-full border border-blue-200">AI Vision Analysis</span>
+              </div>
             </div>
 
             <div
@@ -140,51 +147,44 @@ export default function DiseaseDetectionPage() {
                 )}
               </div>
 
-              {result.isStub && (
-                <div className="bg-gray-50 rounded-xl p-3 mb-4 text-center">
-                  <p className="text-gray-500 text-xs">{result.symptoms}</p>
+              {result.symptoms ? (
+                <div className="mb-4">
+                  <h4 className="text-xs font-bold text-gray-700 mb-1 uppercase">Symptoms</h4>
+                  <p className="text-sm text-gray-600">{result.symptoms}</p>
+                </div>
+              ) : null}
+
+              {result.treatment?.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="text-xs font-bold text-gray-700 mb-2 uppercase">Treatment Plan</h4>
+                  <ol className="space-y-1">
+                    {result.treatment.map((t, i) => (
+                      <li key={i} className="text-sm text-gray-600 flex gap-2"><span className="text-green-600 font-bold">{i+1}.</span>{t}</li>
+                    ))}
+                  </ol>
                 </div>
               )}
 
-              {!result.isStub && (
-                <>
-                  {result.symptoms && (
-                    <div className="mb-4">
-                      <h4 className="text-xs font-bold text-gray-700 mb-1 uppercase">Symptoms</h4>
-                      <p className="text-sm text-gray-600">{result.symptoms}</p>
-                    </div>
-                  )}
-                  {result.treatment?.length > 0 && (
-                    <div className="mb-4">
-                      <h4 className="text-xs font-bold text-gray-700 mb-2 uppercase">Treatment Plan</h4>
-                      <ol className="space-y-1">
-                        {result.treatment.map((t, i) => (
-                          <li key={i} className="text-sm text-gray-600 flex gap-2"><span className="text-green-600 font-bold">{i+1}.</span>{t}</li>
-                        ))}
-                      </ol>
-                    </div>
-                  )}
-                  {result.pesticides?.length > 0 && (
-                    <div className="mb-4">
-                      <h4 className="text-xs font-bold text-gray-700 mb-2 uppercase">Pesticides</h4>
-                      <div className="flex flex-wrap gap-1.5">
-                        {result.pesticides.map((p, i) => (
-                          <span key={i} className="bg-red-50 text-red-700 text-xs px-2.5 py-1 rounded-full border border-red-200">{p}</span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {result.prevention?.length > 0 && (
-                    <div>
-                      <h4 className="text-xs font-bold text-gray-700 mb-2 uppercase">Prevention</h4>
-                      <ul className="space-y-1">
-                        {result.prevention.map((p, i) => (
-                          <li key={i} className="text-sm text-gray-600 flex gap-2"><span className="text-green-500">✓</span>{p}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </>
+              {result.pesticides?.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="text-xs font-bold text-gray-700 mb-2 uppercase">Pesticides</h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {result.pesticides.map((p, i) => (
+                      <span key={i} className="bg-red-50 text-red-700 text-xs px-2.5 py-1 rounded-full border border-red-200">{p}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {result.prevention?.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-bold text-gray-700 mb-2 uppercase">Prevention</h4>
+                  <ul className="space-y-1">
+                    {result.prevention.map((p, i) => (
+                      <li key={i} className="text-sm text-gray-600 flex gap-2"><span className="text-green-500">✓</span>{p}</li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
           </div>
