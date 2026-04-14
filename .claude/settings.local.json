@@ -12,7 +12,10 @@
       "Bash(npx firebase-tools:*)",
       "Bash(git rm:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(curl:*)",
+      "Bash(python3 -c ':*)",
+      "Read(//tmp/**)"
     ]
   },
   "enableAllProjectMcpServers": true,
