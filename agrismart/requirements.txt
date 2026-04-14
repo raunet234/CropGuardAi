@@ -1,8 +1,8 @@
 flask==3.1.3
 flask-cors==6.0.2
-keras==3.10.0
-tensorflow==2.16.1
-numpy==1.26.4
-pillow==11.3.0
+keras
+tensorflow
+numpy
+pillow
 gunicorn==23.0.0
-h5py==3.12.1
+h5py
